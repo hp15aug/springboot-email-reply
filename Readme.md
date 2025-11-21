@@ -1,9 +1,10 @@
 # AI Email Reply Generator 📧
 
-An intelligent email reply generator powered by Google Gemini AI. This full-stack application helps users generate contextual and tone-appropriate email responses quickly and efficiently.
+An intelligent email reply generator powered by Google Gemini AI. This project includes a full-stack web application and a Chrome extension that integrates directly into Gmail to help users generate contextual and tone-appropriate email responses quickly and efficiently.
 
 ## 🌟 Features
 
+### Web Application
 - **AI-Powered Replies**: Generate intelligent email responses using Google Gemini AI
 - **Multiple Tone Options**: Choose from various tones (Formal, Casual, Friendly, Professional, Urgent)
 - **Real-time Generation**: Instant email reply generation with loading indicators
@@ -11,9 +12,15 @@ An intelligent email reply generator powered by Google Gemini AI. This full-stac
 - **Clean UI**: Modern, responsive interface built with Material-UI
 - **Split View**: Side-by-side view of original email and generated reply
 
+### Chrome Extension
+- **Gmail Integration**: Seamlessly integrates into Gmail's compose interface
+- **One-Click Generation**: AI Reply button directly in Gmail toolbar
+- **Auto-Insert**: Generated replies are automatically inserted into compose box
+- **Context-Aware**: Reads the original email content for contextual responses
+
 ## 🏗️ Architecture
 
-### Frontend
+### Frontend (Web App)
 - **React 18** with Hooks
 - **Material-UI (MUI)** for UI components
 - **Axios** for API calls
@@ -25,6 +32,12 @@ An intelligent email reply generator powered by Google Gemini AI. This full-stac
 - **Maven** for dependency management
 - **Google Gemini AI** for email generation
 
+### Chrome Extension
+- **Manifest V3**
+- **Content Scripts** for Gmail DOM manipulation
+- **Service Worker** for API communication
+- **Chrome APIs** for extension functionality
+
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -33,6 +46,7 @@ Before you begin, ensure you have the following installed:
 - **npm** or **yarn**
 - **Java 23**
 - **Maven** (v3.8 or higher)
+- **Google Chrome** browser (for extension)
 - **Google Gemini API Key** ([Get it here](https://makersuite.google.com/app/apikey))
 
 ## 🚀 Getting Started
@@ -40,8 +54,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd email-reply-generator
+git clone https://github.com/hp15aug/springboot-email-reply.git
+cd springboot-email-reply
 ```
 
 ### 2. Backend Setup
@@ -78,7 +92,7 @@ mvn spring-boot:run
 
 The backend server will start on `http://localhost:8080`
 
-### 3. Frontend Setup
+### 3. Frontend Setup (Web App)
 
 #### Navigate to Frontend Directory
 ```bash
@@ -97,6 +111,28 @@ npm run dev
 
 The frontend application will start on `http://localhost:5173` (or another port if 5173 is occupied)
 
+### 4. Chrome Extension Setup
+
+#### Load the Extension
+
+1. Open Chrome and navigate to `chrome://extensions/`
+2. Enable **Developer mode** (toggle in top right corner)
+3. Click **Load unpacked**
+4. Select the `extension` folder from your project directory
+5. The extension will now appear in your Chrome toolbar
+
+#### Using the Extension
+
+1. Navigate to [Gmail](https://mail.google.com)
+2. Open an email you want to reply to
+3. Click the **Reply** button to open the compose window
+4. Look for the **AI Reply** button in the compose toolbar
+5. Click it to generate an AI-powered response
+6. The generated reply will be automatically inserted into the compose box
+7. Edit if needed and send!
+
+**Note**: Make sure the backend server is running on `http://localhost:8080` for the extension to work.
+
 ## 📁 Project Structure
 
 ```
@@ -109,20 +145,28 @@ email-reply-generator/
 │   ├── package.json
 │   └── vite.config.js
 │
-└── email-reply-sb/               # Spring Boot Backend
-    ├── src/
-    │   ├── main/
-    │   │   ├── java/com/email/reply/
-    │   │   │   ├── config/       # Configuration classes
-    │   │   │   ├── controller/   # REST controllers
-    │   │   │   ├── models/       # Data models
-    │   │   │   ├── service/      # Business logic
-    │   │   │   └── EmailReplySbApplication.java
-    │   │   └── resources/
-    │   │       └── application.properties
-    │   └── test/
-    ├── pom.xml
-    └── mvnw
+├── email-reply-sb/               # Spring Boot Backend
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/email/reply/
+│   │   │   │   ├── config/       # Configuration classes
+│   │   │   │   ├── controller/   # REST controllers
+│   │   │   │   ├── models/       # Data models
+│   │   │   │   ├── service/      # Business logic
+│   │   │   │   └── EmailReplySbApplication.java
+│   │   │   └── resources/
+│   │   │       └── application.properties
+│   │   └── test/
+│   ├── pom.xml
+│   └── mvnw
+│
+└── extension/                    # Chrome Extension
+    ├── manifest.json             # Extension configuration
+    ├── popup.js                  # Content script (Gmail integration)
+    ├── popup.css                 # Extension styles
+    ├── background.js             # Service worker (API calls)
+    ├── reply.png                 # Extension icon
+    └── icons/                    # Additional icons
 ```
 
 ## 🔌 API Endpoints
@@ -154,10 +198,20 @@ email-reply-generator/
 
 ## 🎨 Usage
 
+### Web Application
+
 1. **Paste Original Email**: Copy and paste the email you want to reply to in the left panel
 2. **Select Tone**: Choose the desired tone for your reply from the dropdown
 3. **Generate**: Click the "Generate" button to create an AI-powered reply
 4. **Edit & Copy**: Review the generated reply, make any edits, and copy to clipboard
+
+### Chrome Extension
+
+1. **Open Gmail**: Navigate to your Gmail inbox
+2. **Open Email**: Click on an email you want to reply to
+3. **Start Reply**: Click the "Reply" button in Gmail
+4. **Generate**: Click the "AI Reply" button in the compose toolbar
+5. **Review & Send**: Review the generated response, edit if needed, and send
 
 ## 🛠️ Technologies Used
 
@@ -176,6 +230,14 @@ email-reply-generator/
 | Java 23 | Programming Language |
 | Maven | Build & Dependency Management |
 | Google Gemini | AI Model |
+
+### Extension
+| Technology | Purpose |
+|------------|---------|
+| Chrome Extension API | Browser Integration |
+| Manifest V3 | Extension Framework |
+| Content Scripts | DOM Manipulation |
+| Service Worker | Background Processing |
 
 ## ⚙️ Configuration
 
@@ -207,6 +269,10 @@ const response = await axios.post("http://localhost:8080/api/email/generate", {
 });
 ```
 
+### Extension Configuration
+
+The extension is configured to connect to `http://localhost:8080` by default. If you need to change this, update the API URL in `background.js`.
+
 ## 🐛 Troubleshooting
 
 ### Common Issues
@@ -220,6 +286,19 @@ const response = await axios.post("http://localhost:8080/api/email/generate", {
 - Ensure backend is running on port 8080
 - Check CORS configuration
 - Verify API endpoint URL in `App.jsx`
+
+**Extension not working:**
+- Ensure backend is running on `http://localhost:8080`
+- Check if extension is enabled in `chrome://extensions/`
+- Verify you're on Gmail (`mail.google.com`)
+- Check browser console for errors (F12 → Console)
+- Try reloading the extension and refreshing Gmail
+
+**AI Reply button not appearing:**
+- Wait a few seconds after opening compose window
+- Refresh the Gmail page
+- Check if you're in the compose view
+- Reload the extension from `chrome://extensions/`
 
 **API Key Issues:**
 - Verify your Gemini API key is valid
@@ -235,6 +314,31 @@ Create a `.env` file or set system environment variables:
 export GEMINI_API_KEY="your-api-key-here"
 export GEMINI_API_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
 ```
+
+## 🔒 Security Notes
+
+- The extension requires permission to access `mail.google.com` to inject the AI Reply button
+- The extension communicates with `localhost:8080` - ensure your backend has proper security measures
+- API keys should never be committed to version control
+- For production use, implement proper authentication and rate limiting
+
+## 🚀 Production Deployment
+
+### Backend
+- Configure production database if needed
+- Set up environment variables securely
+- Use HTTPS for production endpoints
+- Implement rate limiting and authentication
+
+### Frontend
+- Build for production: `npm run build`
+- Deploy to hosting service (Vercel, Netlify, etc.)
+- Update API endpoints to production URLs
+
+### Extension
+- Update `background.js` to use production API endpoint
+- Package extension for Chrome Web Store if publishing
+- Follow Chrome Web Store guidelines for submission
 
 ## 🤝 Contributing
 
@@ -255,6 +359,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Google Gemini AI for powering the email generation
 - Material-UI for the beautiful component library
 - Spring Boot community for excellent documentation
+- Chrome Extension API for seamless browser integration
 
 ## 📧 Contact
 
@@ -262,4 +367,4 @@ For questions or support, please open an issue in the repository.
 
 ---
 
-**Made with ❤️ by Burn using React, Spring Boot, and Google Gemini AI**
+**Made with ❤️ using React, Spring Boot, Google Gemini AI, and Chrome Extensions**
