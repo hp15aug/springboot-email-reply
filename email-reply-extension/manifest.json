@@ -1,0 +1,47 @@
+{
+    "name": "Email Reply Generator",
+    "version": "1.0.0",
+    "description": "Generates email replies based on the content of received emails.",
+    "manifest_version": 3,
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting"
+    ],
+    "action": {
+        "default_title": "popup.html",
+        "default_icon": "reply.png"
+    },
+    "host_permissions": [
+        "http://localhost:8080/*",
+        "*://mail.google.com/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://mail.google.com/*"
+            ],
+            "js": [
+                "popup.js"
+            ],
+            "css": [
+                "popup.css"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "reply.png",
+                "icons/"
+            ],
+            "matches": [
+                "*://mail.google.com/*"
+            ]
+        }
+    ]
+}
